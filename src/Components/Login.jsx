@@ -16,13 +16,15 @@ const Login = () => {
     }
 
     return (
-        <GoogleLogin
-            clientId="1060947681639-l44puqvv2mbnn4ojg5pejmlj1rs6it9c.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-        />
+        <div style={{ textAlign: 'center', marginTop: "200px" }}>
+            <GoogleLogin
+                clientId="1060947681639-l44puqvv2mbnn4ojg5pejmlj1rs6it9c.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+            />
+        </div>
     )
 }
 

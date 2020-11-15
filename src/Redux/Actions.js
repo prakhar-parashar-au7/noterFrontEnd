@@ -3,6 +3,7 @@ import Axios from 'axios'
 
 export const userLoggedIn = (userInfo, history) => {
     console.log(userInfo)
+    console.log(process.env.BACKEND_URL)
     return async (dispatch) => {
 
         Axios({
@@ -28,13 +29,6 @@ export const userLoggedIn = (userInfo, history) => {
 }
 
 
-// const saveUserInfoToRedux = (userInfo) => {
-//     return {
-//         type: "USER_LOGGED_IN",
-//         payload: userInfo
-//     }
-// }
-
 
 
 export const noteCreateRequestAction = (note) => {
@@ -52,14 +46,13 @@ export const noteCreateRequestAction = (note) => {
             }
         }).then((response) => {
             dispatch(getUpdatedNotesAction(note.userGoogleId))
-
         })
 
 
     }
 }
 
-const getUpdatedNotesAction = (userGoogleId) => {
+export const getUpdatedNotesAction = (userGoogleId) => {
     console.log("getUpdatedNotesAction")
     return async (dispatch) => {
         await Axios({
