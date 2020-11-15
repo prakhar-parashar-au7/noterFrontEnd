@@ -15,6 +15,8 @@ export const userLoggedIn = (userInfo, history) => {
             }
         }).then((response) => {
             console.log(response.data)
+            // localStorage.clear()
+            // localStorage.setItem("noterToken", userInfo.accessToken)
             dispatch(storeInfoInRedux(response.data))
             history.push('/Home')
         })

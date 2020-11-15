@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -105,10 +105,17 @@ export default function MiniDrawer() {
     const [currentlyEditing, setCurrentlyEditing] = React.useState(-1)
     const [currentlyEditingText, setCurrentlyEditingText] = React.useState("")
     const [currentPriority, setCurrentPriority] = React.useState("")
-    const user = useSelector(state => state.user)
+
     const dispatch = useDispatch()
     const history = useHistory()
 
+
+
+    useEffect(() => {
+        console.log("hwewe")
+    });
+
+    const user = useSelector(state => state.user)
 
     const handleDrawerOpen = () => {
         setOpen(true);
