@@ -8,7 +8,7 @@ export const userLoggedIn = (userInfo, history) => {
 
         Axios({
             method: "post",
-            url: "http://localhost:8080/userLogin",
+            url: "https://cryptic-reef-81818.herokuapp.com/userLogin",
             data: {
                 userInfo: userInfo.profileObj,
                 token: userInfo.accessToken
