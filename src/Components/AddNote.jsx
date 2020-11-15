@@ -25,6 +25,9 @@ const MyVerticallyCenteredModal = (props) => {
         console.log(notePriority)
         props.closeModal()
         dispatch(noteCreateRequestAction({ userGoogleId, noteText, photoInfo, notePriority }))
+        setNoteText("")
+        setNotePriority("")
+        setPhotoInfo("")
     }
 
     const setPriority = (priority) => {
