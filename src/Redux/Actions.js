@@ -2,7 +2,7 @@ import Axios from 'axios'
 
 
 export const userLoggedIn = (userInfo, history) => {
-
+    console.log(userInfo)
     return async (dispatch) => {
 
         Axios({

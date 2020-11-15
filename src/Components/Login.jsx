@@ -10,6 +10,7 @@ const Login = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const responseGoogle = (response) => {
+        console.log(response)
         dispatch(userLoggedIn(response, history))
         // history.push('/Home')
     }
