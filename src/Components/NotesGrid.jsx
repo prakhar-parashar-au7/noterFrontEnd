@@ -194,11 +194,11 @@ const NotesGrid = (props) => {
                                                             </div>
 
                                                             :
-                                                            <div style={{ margin: "25px" }}>
+                                                            <div style={{ margin: "25px", textAlign: "center" }}>
                                                                 {
                                                                     (!(note.photoInfo === "")) ?
                                                                         <div>
-                                                                            <div style={{ marginLeft: "80px" }}>
+                                                                            <div>
                                                                                 <Image publicId={note.photoInfo} width="100" height="100" cloudName="prakhar-parashar" />
 
                                                                             </div>
