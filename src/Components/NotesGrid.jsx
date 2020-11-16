@@ -194,7 +194,7 @@ const NotesGrid = (props) => {
                                                             </div>
 
                                                             :
-                                                            <div style={{ margin: "10px" }}>
+                                                            <div style={{ margin: "25px" }}>
                                                                 {
                                                                     (!(note.photoInfo === "")) ?
                                                                         <div>
