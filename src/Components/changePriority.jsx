@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton'
@@ -44,13 +43,13 @@ export default function ChangePriority(props) {
                 onClose={handleCloseFromOutside}
             >  {
 
-                    (props.currentPriority == "High") ?
+                    (props.currentPriority === "High") ?
                         <div>
                             <MenuItem data-my-value="Medium" onClick={handleClose}>Medium</MenuItem>
                             <MenuItem data-my-value="Low" onClick={handleClose}>Low</MenuItem>
                         </div>
                         :
-                        (props.currentPriority == "Medium") ?
+                        (props.currentPriority === "Medium") ?
                             <div>
                                 <MenuItem data-my-value="High" onClick={handleClose}>High</MenuItem>
                                 <MenuItem data-my-value="Low" onClick={handleClose}>Low</MenuItem>

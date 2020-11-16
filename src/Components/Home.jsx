@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -8,7 +8,6 @@ import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete'
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -17,20 +16,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AddIcon from '@material-ui/icons/Add';
 import AddNote from './AddNote'
-import { useSelector, useDispatch } from 'react-redux';
-import { Image } from 'cloudinary-react'
+import { useSelector } from 'react-redux';
+
 import './masonry.css'
-import TextField from '@material-ui/core/TextField';
-import Axios from 'axios'
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
-import Button from '@material-ui/core/Button';
-import { getUpdatedNotesAction } from '../Redux/Actions'
-import { useHistory } from 'react-router-dom';
-import Masonry from 'react-masonry-css'
-import CircularProgress from '@material-ui/core/CircularProgress';
+
 import Tooltip from '@material-ui/core/Tooltip'
-import ChangePriority from './changePriority';
-import EditField from './EditField'
+import NotesGrid from './NotesGrid'
 
 
 const drawerWidth = 240;
@@ -105,16 +96,6 @@ export default function Home() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [AddNoteModal, setAddNoteModal] = React.useState(false);
-    const [currentlyEditing, setCurrentlyEditing] = React.useState(-1)
-    // const [currentlyEditingText, setCurrentlyEditingText] = React.useState("")
-    const [currentPriority, setCurrentPriority] = React.useState("")
-    const [isEditHighLoading, setEditHighLoading] = React.useState(false)
-    const [isEditMediumLoading, setEditMediumLoading] = React.useState(false)
-    const [isEditLowLoading, setEditLowLoading] = React.useState(false)
-    const dispatch = useDispatch()
-
-
-
 
 
 
@@ -134,128 +115,11 @@ export default function Home() {
     };
 
 
-    const editNote = (index, priority) => {
-        setCurrentPriority(priority)
-        setCurrentlyEditing(index)
-    }
-
-
-    const sendEditReq = (priority, userGoogleId, currentlyEditingText) => {
-
-        if (priority == "High") {
-            setEditHighLoading(true)
-        }
-        else if (priority == "Medium") {
-            setEditMediumLoading(true)
-        }
-        else {
-            setEditLowLoading(true)
-        }
-
-
-        Axios({
-            method: "post",
-            url: "https://cryptic-reef-81818.herokuapp.com/editNote",
-            data: {
-                priority, currentlyEditing, currentlyEditingText, userGoogleId
-            }
-        }).then(() => {
-            console.log("hiii")
-            setCurrentlyEditing(-1)
-
-            setCurrentPriority("")
-            if (priority == "High") {
-                dispatch(getUpdatedNotesAction(user.googleId, null, setEditHighLoading))
-            }
-            else if (priority == "Medium") {
-                dispatch(getUpdatedNotesAction(user.googleId, null, setEditMediumLoading))
-            }
-            else {
-                dispatch(getUpdatedNotesAction(user.googleId, null, setEditLowLoading))
-
-            }
-        })
-        console.log(currentlyEditing, currentlyEditingText)
-    }
-
-    const deleteNote = (index, priority, userGoogleId) => {
-        setCurrentlyEditing(index)
-        if (priority == "High") {
-            setEditHighLoading(true)
-        }
-        else if (priority == "Medium") {
-            setEditMediumLoading(true)
-        }
-        else {
-            setEditLowLoading(true)
-        }
-        Axios({
-            method: "post",
-            url: "https://cryptic-reef-81818.herokuapp.com/deleteNote",
-            data: {
-                priority, index, userGoogleId
-            }
-        }).then(() => {
-
-            if (priority == "High") {
-                dispatch(getUpdatedNotesAction(user.googleId, null, setEditHighLoading))
-                setCurrentlyEditing(-1)
-            }
-            else if (priority == "Medium") {
-                dispatch(getUpdatedNotesAction(user.googleId, null, setEditMediumLoading))
-                setCurrentlyEditing(-1)
-            }
-            else {
-                dispatch(getUpdatedNotesAction(user.googleId, null, setEditLowLoading))
-                setCurrentlyEditing(-1)
-
-            }
-        })
-    }
-
     const closeModal = () => {
         setAddNoteModal(false)
     }
 
 
-    const changePriorityRequest = (newPriority, currentPriority, index, userGoogleId) => {
-        setCurrentlyEditing(index)
-        if (currentPriority == "High") {
-            setEditHighLoading(true)
-        }
-        else if (currentPriority == "Medium") {
-            setEditMediumLoading(true)
-        }
-        else {
-            setEditLowLoading(true)
-        }
-
-        Axios({
-            method: "post",
-            url: "https://cryptic-reef-81818.herokuapp.com/changePriority",
-            data: {
-                newPriority,
-                currentPriority,
-                index,
-                userGoogleId
-            }
-        }).then(() => {
-
-            if (currentPriority == "High") {
-                dispatch(getUpdatedNotesAction(user.googleId, null, setEditHighLoading))
-                setCurrentlyEditing(-1)
-            }
-            else if (currentPriority == "Medium") {
-                dispatch(getUpdatedNotesAction(user.googleId, null, setEditMediumLoading))
-                setCurrentlyEditing(-1)
-            }
-            else {
-                dispatch(getUpdatedNotesAction(user.googleId, null, setEditLowLoading))
-                setCurrentlyEditing(-1)
-
-            }
-        })
-    }
 
 
 
@@ -337,147 +201,8 @@ export default function Home() {
                         onHide={() => setAddNoteModal(false)}
 
                     />
+                    <NotesGrid type="HIGH PRIORITY NOTES" notes="highPriorityNotes" />
 
-
-                    <div>
-                        <h5 style={{ marginLeft: "40px", marginBottom: "30px" }}>HIGH PRIORITY NOTES</h5>
-
-                        <Masonry
-                            breakpointCols={3}
-                            className="my-masonry-grid"
-                            columnClassName="my-masonry-grid_column">
-
-
-
-                            {
-                                user.highPriorityNotes.map((note, index) => <div>
-                                    {
-
-                                        (isEditHighLoading && currentlyEditing == index) ? <CircularProgress /> :
-                                            <div>
-                                                {
-                                                    (currentlyEditing == index && currentPriority == "High") ?
-
-
-
-                                                        <div>
-
-                                                            <EditField note={note} sendEditReq={sendEditReq} />
-
-                                                        </div>
-
-                                                        :
-                                                        <div style={{ margin: "10px" }}>
-                                                            {
-                                                                (!(note.photoInfo == "")) ?
-                                                                    <div>
-                                                                        <div style={{ marginLeft: "80px" }}>
-                                                                            <Image publicId={note.photoInfo} width="100" height="100" cloudName="prakhar-parashar" />
-
-                                                                        </div>
-                                                                        <hr width="75%"></hr>
-                                                                    </div>
-                                                                    :
-                                                                    null}
-
-                                                            {note.noteText}
-                                                            <div style={{ display: "grid", gridTemplateColumns: "auto auto auto", gridGap: "20px" }}>
-                                                                <Tooltip title="edit">
-                                                                    <IconButton onClick={() => { editNote(index, note.notePriority) }}><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                                    </svg></IconButton>
-                                                                </Tooltip>
-
-                                                                <Tooltip title="Delete">
-                                                                    <IconButton aria-label="delete" onClick={() => { deleteNote(index, note.notePriority, note.userGoogleId) }}>
-                                                                        <DeleteIcon />
-                                                                    </IconButton>
-                                                                </Tooltip>
-
-                                                                <ChangePriority currentPriority={note.notePriority} index={index} userGoogleId={note.userGoogleId} changePriorityRequest={changePriorityRequest} />
-                                                            </div>
-                                                        </div>
-                                                }
-                                            </div>}
-                                </div>)
-                            }
-
-                        </Masonry>
-                    </div>
-                    <br></br>
-                    <br></br>
-                    <hr width="75%"></hr>
-                    <br></br>
-                    <br></br>
-
-
-
-
-                    <div>
-                        <h5 style={{ marginLeft: "40px", marginBottom: "30px" }}>MEDIUM PRIORITY NOTES</h5>
-                        <Masonry
-                            breakpointCols={3}
-                            className="my-masonry-grid"
-                            columnClassName="my-masonry-grid_column">
-
-
-                            {
-                                user.mediumPriorityNotes.map((note, index) => <div>
-
-                                    {
-
-                                        (isEditMediumLoading && currentlyEditing == index) ? <CircularProgress /> :
-                                            <div>
-                                                {
-                                                    (currentlyEditing == index && currentPriority == "Medium") ?
-                                                        <div>
-                                                            <EditField note={note} sendEditReq={sendEditReq} />
-
-                                                        </div>
-                                                        :
-
-                                                        <div style={{ margin: "10px" }}>
-
-                                                            {
-
-
-
-                                                                (!(note.photoInfo == "")) ?
-                                                                    <div>
-                                                                        <div style={{ marginLeft: "80px" }}>
-                                                                            <Image publicId={note.photoInfo} width="100" height="100" cloudName="prakhar-parashar" />
-
-                                                                        </div>
-                                                                        <hr width="75%"></hr>
-                                                                    </div>
-                                                                    :
-                                                                    null}
-
-                                                            {note.noteText}
-                                                            <div style={{ display: "grid", gridTemplateColumns: "auto auto auto", gridGap: "20px" }}>
-                                                                <Tooltip title="edit">
-                                                                    <IconButton onClick={() => { editNote(index, note.notePriority) }}><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                                    </svg></IconButton>
-                                                                </Tooltip>
-
-                                                                <Tooltip title="Delete">
-                                                                    <IconButton aria-label="delete" onClick={() => { deleteNote(index, note.notePriority, note.userGoogleId) }}>
-                                                                        <DeleteIcon />
-                                                                    </IconButton>
-                                                                </Tooltip>
-                                                                <ChangePriority currentPriority={note.notePriority} index={index} userGoogleId={note.userGoogleId} changePriorityRequest={changePriorityRequest} />
-                                                            </div>
-
-                                                        </div>
-                                                }
-                                            </div>}
-                                </div>)
-                            }
-                        </Masonry>
-                    </div>
 
                     <br></br>
                     <br></br>
@@ -487,70 +212,17 @@ export default function Home() {
 
 
 
-                    <div>
-                        <h5 style={{ marginLeft: "40px", marginBottom: "30px" }}>LOW PRIORITY NOTES</h5>
-                        <Masonry
-                            breakpointCols={3}
-                            className="my-masonry-grid"
-                            columnClassName="my-masonry-grid_column"
-                        >
+                    <NotesGrid type="MEDIUM PRIORITY NOTES" notes="mediumPriorityNotes" />
 
 
-                            {
-                                user.lowPriorityNotes.map((note, index) => <div>
+                    <br></br>
+                    <br></br>
+                    <hr width="75%"></hr>
+                    <br></br>
+                    <br></br>
 
-                                    {
+                    <NotesGrid type="LOW PRIORITY NOTES" notes="lowPriorityNotes" />
 
-                                        (isEditLowLoading && currentlyEditing == index) ? <CircularProgress /> :
-                                            <div>
-                                                {
-                                                    (currentlyEditing == index && currentPriority == "Low") ?
-                                                        <div>
-
-                                                            <EditField note={note} sendEditReq={sendEditReq} />
-
-                                                        </div>
-                                                        :
-
-                                                        <div style={{ margin: "10px" }}>
-
-                                                            {
-                                                                (!(note.photoInfo == "")) ?
-                                                                    <div>
-                                                                        <div style={{ marginLeft: "80px" }}>
-                                                                            <Image publicId={note.photoInfo} width="100" height="100" cloudName="prakhar-parashar" />
-
-                                                                        </div>
-                                                                        <hr width="75%"></hr>
-                                                                    </div>
-                                                                    :
-                                                                    null}
-
-                                                            {note.noteText}
-                                                            <div style={{ display: "grid", gridTemplateColumns: "auto auto auto", gridGap: "20px" }}>
-                                                                <Tooltip title="edit">
-                                                                    <IconButton onClick={() => { editNote(index, note.notePriority) }}><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                                    </svg></IconButton>
-                                                                </Tooltip>
-
-                                                                <Tooltip title="Delete">
-                                                                    <IconButton aria-label="delete" onClick={() => { deleteNote(index, note.notePriority, note.userGoogleId) }}>
-                                                                        <DeleteIcon />
-                                                                    </IconButton>
-                                                                </Tooltip>
-
-                                                                <ChangePriority currentPriority={note.notePriority} index={index} userGoogleId={note.userGoogleId} changePriorityRequest={changePriorityRequest} />
-
-                                                            </div>
-                                                        </div>
-                                                }
-                                            </div>}
-                                </div>)
-                            }
-                        </Masonry>
-                    </div>
                 </main>
             </div>
             : null

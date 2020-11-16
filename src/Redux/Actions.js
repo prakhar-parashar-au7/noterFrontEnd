@@ -1,8 +1,8 @@
 import Axios from 'axios'
 
 
-export const userLoggedIn = (userInfo, history, setIsLoading, ) => {
-    
+export const userLoggedIn = (userInfo, history, setIsLoading,) => {
+
     return async (dispatch) => {
 
         Axios({
