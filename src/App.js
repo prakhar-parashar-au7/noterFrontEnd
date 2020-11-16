@@ -5,6 +5,7 @@ import Login from './Components/Login'
 import { userLoggedIn } from './Redux/Actions'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
+import './App.css'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
@@ -33,13 +34,13 @@ function App() {
 
   return (
     <div className="App">
-     
 
-          <BrowserRouter>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/Home" component={Home} />
-          </BrowserRouter>
-      
+
+      <BrowserRouter>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/Home" component={Home} />
+      </BrowserRouter>
+
     </div>
   );
 }
