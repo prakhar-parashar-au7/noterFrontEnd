@@ -232,7 +232,7 @@ export default function Home() {
 
         Axios({
             method: "post",
-            url: "http://localhost:8080/changePriority",
+            url: "https://cryptic-reef-81818.herokuapp.com/changePriority",
             data: {
                 newPriority,
                 currentPriority,
@@ -317,14 +317,14 @@ export default function Home() {
 
                     <List>
                         <ListItem button key="Add" onClick={() => { setAddNoteModal(true); setOpen(false) }}>
-                           
-                            <ListItemIcon> 
+
+                            <ListItemIcon>
                                 <Tooltip title="Add a Note">
-                                <AddIcon />
+                                    <AddIcon />
                                 </Tooltip>
-                                </ListItemIcon>
+                            </ListItemIcon>
                             <ListItemText primary="Add" />
-                            
+
 
                         </ListItem>
                     </List>
@@ -361,7 +361,7 @@ export default function Home() {
 
 
                                                         <div>
-                                                            
+
                                                             <EditField note={note} sendEditReq={sendEditReq} />
 
                                                         </div>
