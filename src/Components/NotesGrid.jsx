@@ -206,8 +206,9 @@ const NotesGrid = (props) => {
                                                                         </div>
                                                                         :
                                                                         null}
-
-                                                                {note.noteText}
+                                                                <div style={{ textAlign: "justify" }}>
+                                                                    {note.noteText}
+                                                                </div>
                                                                 <div style={{ display: "grid", gridTemplateColumns: "auto auto auto", gridGap: "20px" }}>
                                                                     <Tooltip title="edit">
                                                                         <IconButton onClick={() => { editNote(index, note.notePriority) }}><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
