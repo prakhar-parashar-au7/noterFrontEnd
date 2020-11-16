@@ -2,8 +2,7 @@ import Axios from 'axios'
 
 
 export const userLoggedIn = (userInfo, history) => {
-    console.log(userInfo)
-    console.log(process.env.BACKEND_URL)
+
     return async (dispatch) => {
 
         Axios({
@@ -15,8 +14,8 @@ export const userLoggedIn = (userInfo, history) => {
             }
         }).then((response) => {
             console.log(response.data)
-            // localStorage.clear()
-            // localStorage.setItem("noterToken", userInfo.accessToken)
+            //  localStorage.clear()
+            //  localStorage.setItem("userEmail", userInfo.profileObj.email)
             dispatch(storeInfoInRedux(response.data))
             history.push('/Home')
         })
