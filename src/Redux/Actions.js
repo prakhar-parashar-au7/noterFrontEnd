@@ -1,8 +1,8 @@
 import Axios from 'axios'
 
 
-export const userLoggedIn = (userInfo, history, setIsLoading) => {
-
+export const userLoggedIn = (userInfo, history, setIsLoading, ) => {
+    
     return async (dispatch) => {
 
         Axios({
@@ -14,11 +14,16 @@ export const userLoggedIn = (userInfo, history, setIsLoading) => {
             }
         }).then((response) => {
             console.log(response.data)
-            //  localStorage.clear()
-            //  localStorage.setItem("userEmail", userInfo.profileObj.email)
+            localStorage.clear()
+            localStorage.setItem("userGoogleId", userInfo.profileObj.googleId)
             dispatch(storeInfoInRedux(response.data))
-            setIsLoading(false)
-            history.push('/Home')
+            if (setIsLoading) {
+                setIsLoading(false)
+            }
+            if (history) {
+                history.push('/Home')
+            }
+
         })
 
     }
