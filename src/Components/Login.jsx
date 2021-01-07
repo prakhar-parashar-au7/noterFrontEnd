@@ -14,8 +14,9 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const responseGoogle = (response) => {
         console.log(response)
-        setIsLoading(true)
+        
         dispatch(userLoggedIn(response, history, setIsLoading))
+        setIsLoading(true)
         // history.push('/Home')
     }
 
