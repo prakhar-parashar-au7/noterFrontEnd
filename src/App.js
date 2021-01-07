@@ -17,18 +17,18 @@ function App() {
 
 
 
-  // if (localStorage.getItem("userGoogleId")) {
-  //   const googleId = localStorage.getItem("userGoogleId")
-  //   const userInfo = {
-  //     profileObj: {
-  //       googleId: googleId
-  //     }
+  if (localStorage.getItem("userGoogleId")) {
+    const googleId = localStorage.getItem("userGoogleId")
+    const userInfo = {
+      profileObj: {
+        googleId: googleId
+      }
 
-  //   }
+    }
 
-  //   dispatch(userLoggedIn(userInfo))
+    dispatch(userLoggedIn(userInfo))
 
-  // }
+  }
 
 
 
