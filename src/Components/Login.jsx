@@ -34,7 +34,7 @@ const Login = () => {
                         onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
                     />
-                    <a href="https://web.whatsapp.com/send?phone=917975563127&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Varela%202." class="floats" target="_blank"></a>
+                    <a href="https://web.whatsapp.com/send?phone=917975563127&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Varela%202." class="floats" target="_blank">helloo</a>
                  </>
             }
         </div>
